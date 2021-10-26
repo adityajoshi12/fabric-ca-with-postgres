@@ -7,8 +7,7 @@ networks:
 services:
   ca_org1:
     image: hyperledger/fabric-ca:latest
-    labels:
-      service: hyperledger-fabric
+
     environment:
       - FABRIC_CA_HOME=/etc/hyperledger/fabric-ca-server
       - FABRIC_CA_SERVER_CA_NAME=ca-org1
@@ -29,8 +28,9 @@ services:
       - test
 
   postgres:
-    image: post:v1
     container_name: postgres
+    image: post:v1
+    # restart: on-failure:5
     networks:
       - test
     ports:

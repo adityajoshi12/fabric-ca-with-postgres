@@ -1,4 +1,7 @@
 docker-compose down
-sudo rm fabric-ca-server/msp fabric-ca-server/*.pem -rf
-
+pushd fabric-ca-server
+shopt -s extglob
+sudo rm !("fabric-ca-server-config.yaml") -rf
+popd
+sudo rm postgres-certs -rf
 docker volume prune
