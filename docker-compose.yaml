@@ -30,7 +30,6 @@ services:
   postgres:
     container_name: postgres
     image: post:v1
-    # restart: on-failure:5
     networks:
       - test
     ports:

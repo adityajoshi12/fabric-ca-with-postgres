@@ -4,23 +4,22 @@ mkdir postgres-certs
 cd postgres-certs
 
 
+echo "Generating Server Key and Server Certificate \n\n"
+openssl req  -nodes -new -x509  -keyout server.key -out server.crt -subj '/C=IN/ST=HR/L=FBD/O=postgres/CN=postgres'
 
-openssl genrsa -des3 -out server.key 2048
+# openssl genrsa -des3 -out server.key 2048
 
-openssl rsa -in server.key -out server.key
-
-# sudo chmod 400 server.key
-# sudo chown postgres.postgres server.key
-
-
-
-openssl req -new -key server.key -days 3650 -out server.crt -x509 -subj '/C=IN/ST=HR/L=FBD/O=postgres/CN=postgres'
+# openssl rsa -in server.key -out server.key
 
 
 
+# openssl req -new -key server.key -days 3650 -out server.crt -x509 -subj '/C=IN/ST=HR/L=FBD/O=postgres/CN=postgres'
 
-echo "Client cert"
 cp server.crt root.crt
+
+
+
+echo "Creating Client certificate \n\n"
 
 mkdir client
 
@@ -33,4 +32,7 @@ openssl req -new -key client/postgresql.key -out client/postgresql.csr -subj '/C
 
 
 openssl x509 -req -in client/postgresql.csr -CA root.crt -CAkey server.key -out client/postgresql.crt -CAcreateserial
+
+
+
 cp root.crt client
